@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpediaPractice", "ExpediaPractice\ExpediaPractice.csproj", "{7CEEE28E-796A-4BE4-A992-51362FBEAFDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CEEE28E-796A-4BE4-A992-51362FBEAFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CEEE28E-796A-4BE4-A992-51362FBEAFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CEEE28E-796A-4BE4-A992-51362FBEAFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CEEE28E-796A-4BE4-A992-51362FBEAFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {945BB9FA-5DE1-47A9-930A-6063BDE2FA69}
+	EndGlobalSection
+EndGlobal
