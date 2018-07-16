@@ -1,118 +1,108 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpediaPractice
+namespace Practice4
 {
-    public class Program
+    class Program
     {
-
         IWebDriver driver = new ChromeDriver();
-        static void Main(string[] args)
-        {
-        }
+
         [SetUp]
         public void Initialize()
-
         {
-            driver.Navigate().GoToUrl("https://www.expedia.co.uk/");
+            driver.Navigate().GoToUrl("www.test.com");
             driver.Manage().Window.Maximize();
-            Console.WriteLine("Navigate to Url");
         }
         [Test]
-        public void Executetest()
-
+        public void Execute()
         {
-            //Origin
-            driver.FindElement(By.Id("package-origin-hp-package")).Clear();
-            System.Threading.Thread.Sleep(2000);
-            driver.FindElement(By.Id("package-origin-hp-package")).SendKeys("London, England, UK (LHR-Heathrow)");
-            Console.WriteLine("Typed Origin");
 
-            // Get value from textbox ie Origin text box
+            // Get Text 
 
-            IWebElement outPutvalue = driver.FindElement(By.Id("package-origin-hp-package"));
-            string currencyValue = outPutvalue.GetAttribute("value");
-            Console.WriteLine("Value from textbox is: " + currencyValue);
+            String TypedText = driver.FindElement(By.Id("test")).GetAttribute("value");
+            Console.WriteLine("Value from the textbox is" + TypedText);
 
+            // Select Drop Down Menu DDL
 
-            //Destination
-            driver.FindElement(By.Id("package-destination-hp-package")).Clear();
-            System.Threading.Thread.Sleep(2000);
-            driver.FindElement(By.Id("package-destination-hp-package")).SendKeys("Newark, New Jersey, United States of America");
-            Console.WriteLine("Typed destination");
-
-            // Departing
-            driver.FindElement(By.Id("package-departing-hp-package")).Clear();
-            System.Threading.Thread.Sleep(2000);
-            driver.FindElement(By.Id("package-departing-hp-package")).SendKeys("12/06/2018");
-            Console.WriteLine("Typed Departing date");
-            //Returning
-            driver.FindElement(By.Id("package-returning-hp-package")).Clear();
-            System.Threading.Thread.Sleep(2000);
-            driver.FindElement(By.Id("package-returning-hp-package")).SendKeys("16/06/2018");
-            Console.WriteLine("Typed returning date");
-
-            // Select rooms DDL
-            var option = driver.FindElement(By.Id("package-rooms-hp-package"));
+            var option = driver.FindElement(By.Id("test"));
             var SelectElement = new SelectElement(option);
-            System.Threading.Thread.Sleep(3000);
-            SelectElement.SelectByText("1");
-            Console.WriteLine("Selected 1 room");
+            SelectElement.SelectByText("Basildon");
 
-            //Select Adult DDL
+            // Hover and Click 
 
-            var option1 = driver.FindElement(By.Id("package-1-adults-hp-package"));
-            var SelectElement1 = new SelectElement(option1);
-            System.Threading.Thread.Sleep(3000);
-            SelectElement1.SelectByText("2");
-            Console.WriteLine("Selected 2 Adults");
+            Actions action = new Actions(driver);
+            IWebElement element = driver.FindElement(By.Id("test"));
+            action.MoveToElement(element).Build().Perform();
+            driver.FindElement(By.Id("test")).Click();
 
-            //Select Children DDL
+            // OR
 
-            var option3 = driver.FindElement(By.Id("package-1-children-hp-package"));
-            var SelectElement3 = new SelectElement(option3);
-            System.Threading.Thread.Sleep(3000);
-            SelectElement3.SelectByText("2");
-            Console.WriteLine("Selected 2 Children");
+            Actions action5 = new Actions(driver);
+            action5.MoveToElement(driver.FindElement(By.Id("vacancy"))).Click().Build().Perform();
+            string value = driver.FindElement(By.Name("contract")).GetAttribute("contracts");
 
-            //Select Child 1 Age DDL
 
-            var Henry  = driver.FindElement(By.Id("package-1-age-select-1-hp-package"));
-            var SelectHenry = new SelectElement(Henry); 
-            System.Threading.Thread.Sleep(3000);
-            SelectHenry.SelectByText("6");
-            Console.WriteLine("Selected Children 1 as 6 years old");
+            // Double Click
 
-            //Select Child 2 Age DDL
+            Actions action1 = new Actions(driver);
+            IWebElement element1 = driver.FindElement(By.Id("test"));
+            action1.DoubleClick(element1).Build().Perform();
 
-            var option5 = driver.FindElement(By.Id("package-1-age-select-2-hp-package"));
-            var SelectElement5 = new SelectElement(option5);
-            System.Threading.Thread.Sleep(3000);
-            SelectElement5.SelectByText("1");
-            Console.WriteLine("Selected Children 2 as 1 years old");
+            // Right click
 
-            //Select direct flight checkbox/ I need a hotel 
-            driver.FindElement(By.Id("packageDirectFlight-hp-package")).Click();
+            Actions action2 = new Actions(driver);
+            IWebElement element2 = driver.FindElement(By.Id("test"));
+            action2.ContextClick(element2).Build().Perform();
+
+            //Scroll Down Window 
+
+            driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[4]/div/d")).Click();
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("scroll(0, 290);");
+
+            Console.WriteLine("Scrolled down");
+            js.ExecuteScript("scroll(290, 0);");
+            Console.WriteLine("Scrolled up");
+
+            // Wait /Sleep
+
             System.Threading.Thread.Sleep(2000);
-            Console.WriteLine("Ticked direct flight checkbox");
 
-            //Select I need a hotel checkbox
-            driver.FindElement(By.Id("partialHotelBooking-hp-package")).Click();
-            System.Threading.Thread.Sleep(2000);
-            Console.WriteLine("Ticked i only need a hotel for part stay checkbox");
+            // clear text box 
 
-            //Assert hotel checkbox ticked
+            driver.FindElement(By.Name("test")).Clear();
+
+            //  Send text/ keys
+
+            driver.FindElement(By.Name("test")).SendKeys("henry");
+
+            // Click
+
+            driver.FindElement(By.Name("test")).Click();
+
+            // Verify Element displayed
+
+            IWebElement element8 = driver.FindElement(By.Name("test"));
+            Console.WriteLine(element8.Displayed);
+            Console.Read();
+
+            Assert.IsTrue(driver.FindElement(By.Id("test")).Displayed);
+
+            //Assert checkbox ticked 
+
             try
             {
-                Assert.IsTrue(driver.FindElement(By.Id("partialHotelBooking-hp-package")).Selected);
-                Console.WriteLine("Assertion: I only need a hotel for part stay Checkbox selected");
+                Assert.IsTrue(driver.FindElement(By.Id("test")).Selected);
+                Console.Write("Checkbox selected");
             }
             catch (Exception e)
             {
@@ -120,11 +110,19 @@ namespace ExpediaPractice
                 Console.Write(e);
             }
 
-            //Assert Nector logo imagine displayed 
+            // Assert Are Equal to
+
+            Assert.AreEqual("google", driver.Title);
+            Console.WriteLine("Title pass");
+
+            // Assert page source
+
+            String HtmlPage = driver.PageSource;
+
+            String Hmtpage = "BBC";
             try
             {
-                Assert.IsTrue(driver.FindElement(By.ClassName("wizard-bpg-logo-wrapper")).Displayed);
-                Console.WriteLine("Assertion: Nector image displayed");
+                Assert.IsTrue(driver.FindElement(By.TagName("body")).Text.Contains(Hmtpage));
             }
             catch (Exception e)
             {
@@ -132,49 +130,77 @@ namespace ExpediaPractice
                 Console.Write(e);
             }
 
-            //Verify element present (Airline rules link)
+            // Assert image displayed 
 
-            IWebElement element = driver.FindElement(By.ClassName("cols-nested"));
-            Console.WriteLine("Airline age rules displayed");
+            Assert.IsTrue(driver.FindElement(By.Name("test")).Displayed);
 
+            // Assert is False
 
-            // Assert page source 
+            Assert.IsFalse(driver.FindElement(By.Name("test")).Selected);
 
-            String html_page = "Advanced options";
-            try
+            //Page Objects 
+
+            //public IWebElement usernameTextBox => _driver.FindElement(By.Id("test"));
+
+            // Refresh page
+
+            driver.Navigate().Refresh();
+
+            // Navigate forward/ backwards
+
+            driver.Navigate().Back();
+
+            // Accept alert
+
+            // if else
+
+            String password = "123";
+
+            if (password == "123")
             {
-                Assert.IsTrue(driver.FindElement(By.TagName("body")).Text.Contains(html_page));
-                Console.WriteLine("Assertion: Page source pass");
+                Console.WriteLine("passwod correct");
             }
-            catch (Exception e)
+
+            // Switch Statement
+
+            int myNumber = 5;
+            switch (myNumber)
             {
-
-                Console.Write(e);
+                case 1:
+                    Console.WriteLine("the number is 1");
+                    break;
+                case 2:
+                    Console.WriteLine("the number is 2");
+                    break;
+                case 3:
+                    Console.WriteLine("the number is 2");
+                    break;
+                default:
+                    Console.WriteLine("number unknown");
+                    break;
             }
 
-            //Select preferred class
+            //Foreach loop
 
-            var option6 = driver.FindElement(By.Id("package-advanced-preferred-class-hp-package"));
-            var SelectElement6 = new SelectElement(option6);
-            System.Threading.Thread.Sleep(3000);
-            SelectElement6.SelectByText("First class");
-            Console.WriteLine("Selected First class as preferred class");
+            var price = driver.FindElements(By.Id("productprices"));
+            foreach (var p in price) 
+            {
+                Console.WriteLine(p.Text);
+            }
 
-            // Click search button
-            driver.FindElement(By.Id("search-button-hp-package")).Click();
-            Console.WriteLine("Clicked searched button");
+           // Order by 
+            var myOrdredList = from p in price
+                               orderby price ascending //or descending
+                               select p;
 
+            //OR
 
-
-
-
-
+            var sortedList = price.OrderBy(p => p.Text);
+           // foreach (IWebElement element6 in sortedList)
+           foreach (var p in price)
+            {
+                Console.WriteLine(p.Text);
+            }
         }
-
-
     }
-
-    }
-
-
-
+}
